@@ -7669,7 +7669,11 @@ static double EuclideanDistance(NSPoint p1, NSPoint p2) {
 
     NSRange range = [trimmedURLString rangeOfString:@":"];
     if (range.location == NSNotFound) {
-        trimmedURLString = [NSString stringWithFormat:@"http://%@", trimmedURLString];
+        if ([trimmedURLString hasPrefix:@"H3S-"]) {
+            trimmedURLString = [NSString stringWithFormat: @"http://vlieg.intra.local/browse/%@", trimmedURLString];
+        } else {
+            trimmedURLString = [NSString stringWithFormat:@"http://%@", trimmedURLString];
+        }
     } else {
         // Search backwards for the start of the scheme.
         for (int i = range.location - 1; 0 <= i; i--) {
