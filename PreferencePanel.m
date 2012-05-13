@@ -1289,6 +1289,19 @@ static float versionNumber;
             }
         }
     }
+
+    urlSubstitutions = [[NSMutableDictionary alloc] init];
+    NSDictionary *urlSubsPrefs = [prefs objectForKey:@"URLSubstitutions"];
+    if (urlSubsPrefs) {
+        NSEnumerator *enumerator = [urlSubsPrefs keyEnumerator];
+        id key;
+
+        while ((key = [enumerator nextObject])) {
+            NSString* replacement = [[tempDict objectForKey:key] stringValue];
+            [urlSubstitutions setObject:replacement forKey:key];
+        }
+    }
+
 }
 
 - (void)savePreferences

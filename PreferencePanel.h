@@ -353,6 +353,8 @@ typedef enum { CURSOR_UNDERLINE, CURSOR_VERTICAL, CURSOR_BOX } ITermCursorType;
     // url handler stuff
     NSMutableDictionary *urlHandlersByGuid;
 
+    NSMutableDictionary *urlSubstitutions;
+
     // Bookmarks -----------------------------
     IBOutlet ProfileListView *bookmarksTableView;
     IBOutlet NSTableColumn *shellImageColumn;
