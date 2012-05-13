@@ -1290,18 +1290,8 @@ static float versionNumber;
         }
     }
 
-    urlSubstitutions = [[NSMutableDictionary alloc] init];
-    NSDictionary *urlSubsPrefs = [prefs objectForKey:@"URLSubstitutions"];
-    if (urlSubsPrefs) {
-        NSEnumerator *enumerator = [urlSubsPrefs keyEnumerator];
-        id key;
 
-        while ((key = [enumerator nextObject])) {
-            NSString* replacement = [[tempDict objectForKey:key] stringValue];
-            [urlSubstitutions setObject:replacement forKey:key];
-        }
-    }
-
+    urlSubstitutions = [prefs objectForKey:@"URLSubstitutions"];
 }
 
 - (void)savePreferences
@@ -2428,6 +2418,23 @@ static float versionNumber;
     } else {
         return nil;
     }
+}
+
+- (NSString *)substituteUrl:(NSString *)url {
+    if (!urlSubstitutions) {
+        return nil;
+    }
+    NSEnumerator *const enumerator = urlSubstitutions.keyEnumerator;
+    NSString * key;
+
+    while ((key = [enumerator nextObject])) {
+        if ([url hasPrefix:key]) {
+            NSString *const substitution = [urlSubstitutions objectForKey:key];
+            return [NSString stringWithFormat:@"%@%@", substitution, url];
+        }
+    }
+
+    return nil;
 }
 
 // NSTableView data source

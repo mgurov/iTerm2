@@ -353,7 +353,7 @@ typedef enum { CURSOR_UNDERLINE, CURSOR_VERTICAL, CURSOR_BOX } ITermCursorType;
     // url handler stuff
     NSMutableDictionary *urlHandlersByGuid;
 
-    NSMutableDictionary *urlSubstitutions;
+    NSDictionary *urlSubstitutions;
 
     // Bookmarks -----------------------------
     IBOutlet ProfileListView *bookmarksTableView;
@@ -688,6 +688,7 @@ typedef enum {
 - (float)hotkeyTermAnimationDuration;
 - (NSString *)searchCommand;
 - (Profile *)handlerBookmarkForURL:(NSString *)url;
+- (NSString *)substituteUrl:(NSString*)url;
 - (int)numberOfRowsInTableView: (NSTableView *)aTableView;
 - (NSString*)keyComboAtIndex:(int)rowIndex originator:(id)originator;
 - (NSDictionary*)keyInfoAtIndex:(int)rowIndex originator:(id)originator;
