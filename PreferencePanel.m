@@ -1290,6 +1290,9 @@ static float versionNumber;
             }
         }
     }
+
+
+    urlSubstitutions = [prefs objectForKey:@"URLSubstitutions"];
 }
 
 - (void)savePreferences
@@ -2416,6 +2419,23 @@ static float versionNumber;
     } else {
         return nil;
     }
+}
+
+- (NSString *)substituteUrl:(NSString *)url {
+    if (!urlSubstitutions) {
+        return nil;
+    }
+    NSEnumerator *const enumerator = urlSubstitutions.keyEnumerator;
+    NSString * key;
+
+    while ((key = [enumerator nextObject])) {
+        if ([url hasPrefix:key]) {
+            NSString *const substitution = [urlSubstitutions objectForKey:key];
+            return [NSString stringWithFormat:@"%@%@", substitution, url];
+        }
+    }
+
+    return nil;
 }
 
 // NSTableView data source
