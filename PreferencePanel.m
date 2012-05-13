@@ -2420,9 +2420,9 @@ static float versionNumber;
     }
 }
 
-- (NSString *)substituteUrl:(NSString *)url {
+- (NSString *)tryAndExpandToUrl:(NSString *)url {
     if (!urlSubstitutions) {
-        return nil;
+        return url;
     }
     NSEnumerator *const enumerator = urlSubstitutions.keyEnumerator;
     NSString * key;
@@ -2434,7 +2434,7 @@ static float versionNumber;
         }
     }
 
-    return nil;
+    return url;
 }
 
 // NSTableView data source

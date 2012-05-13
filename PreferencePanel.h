@@ -688,7 +688,7 @@ typedef enum {
 - (float)hotkeyTermAnimationDuration;
 - (NSString *)searchCommand;
 - (Profile *)handlerBookmarkForURL:(NSString *)url;
-- (NSString *)substituteUrl:(NSString*)url;
+- (NSString *)tryAndExpandToUrl:(NSString*)url;
 - (int)numberOfRowsInTableView: (NSTableView *)aTableView;
 - (NSString*)keyComboAtIndex:(int)rowIndex originator:(id)originator;
 - (NSDictionary*)keyInfoAtIndex:(int)rowIndex originator:(id)originator;
