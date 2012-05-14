@@ -41,6 +41,7 @@
 #import "SmartSelectionController.h"
 #import "TrouterPrefsController.h"
 #import "PointerPrefsController.h"
+#import "RegexKitLite.h"
 
 #define CUSTOM_COLOR_PRESETS @"Custom Color Presets"
 #define HOTKEY_WINDOW_GENERATED_PROFILE_NAME @"Hotkey Window"
@@ -1291,7 +1292,7 @@ static float versionNumber;
     }
 
 
-    urlSubstitutions = [prefs objectForKey:@"URLSubstitutions"];
+    urlSubstitutions = [prefs objectForKey:@"URLExpansions"];
 }
 
 - (void)savePreferences
@@ -2421,16 +2422,14 @@ static float versionNumber;
 }
 
 - (NSString *)tryAndExpandToUrl:(NSString *)url {
-    if (!urlSubstitutions) {
-        return url;
-    }
-    NSEnumerator *const enumerator = urlSubstitutions.keyEnumerator;
-    NSString * key;
 
-    while ((key = [enumerator nextObject])) {
-        if ([url hasPrefix:key]) {
-            NSString *const substitution = [urlSubstitutions objectForKey:key];
-            return [NSString stringWithFormat:@"%@%@", substitution, url];
+    for (NSUInteger i=0; i<[urlSubstitutions count]; i++) {
+        NSDictionary* expansion = [urlSubstitutions objectAtIndex:i];
+        NSString* const regexp = [expansion objectForKey:@"regexp"];
+        NSString* const replacement = [expansion objectForKey:@"expansion"];
+        NSMutableString *mutableString = [NSMutableString stringWithString:url];
+        if ([mutableString replaceOccurrencesOfRegex:regexp withString:replacement]) {
+            return mutableString;
         }
     }
 
